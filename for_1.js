@@ -33,3 +33,4 @@
 // for (i=0 ; i<obj.length ; i++){
 //     console.log(`出生月份是`+obj[i].month+`的你，代表的花是"`+obj[i].flower+`"`);
 // }
+
