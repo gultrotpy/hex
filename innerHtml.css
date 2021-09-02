@@ -1,0 +1,24 @@
+.style a{
+  text-decoration: none;
+  font-size: 24px;
+  color: blue;
+}
+
+div{
+  width: 1000px;
+  margin: 0 auto;
+  background: greenyellow;
+}
+
+h1{
+  text-align: center;
+}
+
+.blue{
+  font-size: 24px;
+  color: rebeccapurple;
+  list-style: none;
+  text-align: center;
+  line-height: 40px;
+}
+
