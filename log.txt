@@ -1,0 +1,7 @@
+0914 BMI_1.js
+
+step1:用出公式算出BMI值>利用if判斷區間用innerHTML把li放進ul裡面，但這樣沒有用到localStorage的功能。
+
+step2:利用setItem的功能將輸入的資料放入陣列在以for迴圈的方式以及stringify把每一筆的陣列資料轉型成字串並給予不同名稱i放入localStorage裡面。
+
+step3:localStoage為一種物件，用for迴圈以及parse把每一個字串轉型回物件並用if判斷裡面的count的值放進li裡面。(到此做個紀錄後面將由BMI.js繼續進行，例如將if放進localStorage的判斷裡。)
