@@ -83,7 +83,7 @@ table {
   border-radius: 50%;
   font-size: 24px;
   background: #FFD366;
-  /* display: ; */
+  /* border:1px solid wheat; */
 }
 
 /*看結果的CSS*/
@@ -113,13 +113,13 @@ table {
   height: 30px;
   border-radius: 50%;
   position: absolute;
-  bottom: 5px;
-  right: 5px;
+  bottom: 7px;
+  right: 6px;
   background: #FFD366;
-  background-image: url(/pages/assets/icons_loop.png) ;
-  background-repeat: no-repeat;
-  background-size:20px;
-  
+  background-image: url(/pages/assets/icons_loop.png) !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-size:21px;  
 }
 
 .cal_red{
@@ -161,7 +161,7 @@ table {
   font-size: 24px;
 }
 
-.red, .yellow, .oragne, .green, .blue{
+.red, .yellow, .orange, .green, .blue{
   display: inline-block;
   padding: 20px 5px;
 }
@@ -176,7 +176,7 @@ table {
   color: #FF6C03;
 }
 
-.list li .oragne{
+.list li .orange{
   background: #FF982D;
   color:#FF982D ;
 }
@@ -196,7 +196,7 @@ table {
   margin: 3px;
 }
 .list li{
-  width: 624px;
+  width: 700px;
   height: 62px;
   font-size: 20px;
   display: flex;
@@ -207,3 +207,8 @@ table {
   /* border:1px solid #FFD366; */
 }
 
+.clear{
+  position: relative;
+  bottom: 0;
+  left: 45.5%;
+}
