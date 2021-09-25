@@ -168,7 +168,7 @@ body .wrap{
 
 .travelBox{
   width: 464px;
-  height: 273px;
+  height: 300px;
   margin: 10px;
   box-shadow: 0 1px 3px 0 
 }
@@ -201,8 +201,8 @@ body .wrap{
 }
 
 .travelBox ul li{
-  line-height: 10px;
-  font-family: .AppleSystemUIFont;
+  line-height: 18px;
+  font-family: AppleSystemUIFont;
   font-size: 16px;
   color: #000000;
 }
@@ -211,6 +211,18 @@ body .wrap{
   width: 16px;
   height: 20px;
   padding: 10px 6px 0px 25px;
+}
+
+.page{
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.page li{
+  width: 24px;
+  height: 24px;
+  margin: 5px;
 }
 
 /* footer部分 */
