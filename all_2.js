@@ -77,9 +77,8 @@ pageNum.addEventListener('click',function(e){
 
 hotBtn.addEventListener('click',function(e){
   if (e.target.nodeName != 'INPUT') return;
-
+  h1.textContent = e.target.value;
   pageNum.innerHTML = ``;
-  h1.textContent = list.value;
 
   //抓出選擇的區域資料
   areaData = [];
