@@ -74,7 +74,7 @@ body .wrap{
   top: 100px;
 }
 
-#menu{
+#list{
   background: rgba(255,255,255,0.7);
   font-size: 18px;
 }
@@ -90,7 +90,7 @@ body .wrap{
   font-size: 18px;
 }
 
-.btn{
+.hotBtn{
   display: flex;
   align-items: center;
 }
@@ -159,7 +159,7 @@ body .wrap{
 }
 
 /* 結果的地方 */
-.content_list{
+.content_box{
   width: 1000px;
   margin: 0 auto;
   display: flex;
@@ -213,17 +213,17 @@ body .wrap{
   padding: 10px 6px 0px 25px;
 }
 
-.page{
+.pageNum{
   padding: 20px;
   display: flex;
   justify-content: center;
 }
 
-.page li{
-  width: 24px;
-  height: 24px;
-  margin: 5px;
+.pageNum input{
+  border: 1px solid skyblue;
+  background-color: #fff;
 }
+
 
 /* footer部分 */
 .footer{

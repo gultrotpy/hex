@@ -1,98 +1,114 @@
 const xhr = new XMLHttpRequest();
 
-xhr.open('get','https://api.kcg.gov.tw/api/service/get/9c8e1450-e833-499c-8320-29b36b7ace5c',true);
-xhr.send(null);
+const xhr = new XMLHttpRequest();  //呼叫ajax
 
-const menu = document.getElementById('menu');
+xhr.open('get', 'https://api.kcg.gov.tw/api/service/get/9c8e1450-e833-499c-8320-29b36b7ace5c', true);  //抓取資料並選擇非同步模式
+xhr.send(null);  //回傳訊息為null
+
+const list = document.getElementById('list');
 const h1 = document.querySelector('.content h1');
-const content_list = document.querySelector('.content_list');
-const test = document.querySelector('.test');
-const page = document.querySelector('.page');
+const content_box = document.querySelector('.content_box');
+const pageNum = document.querySelector('.pageNum');
 
 let allData=[];
-let allDataDis=[];
-let tevalData={};
-let pageCount=0;
+let areaData=[];
 
 xhr.onload = function(){
-  let jsonObj = JSON.parse(xhr.responseText);
-  allData = jsonObj.data.XML_Head.Infos.Info;
-  updateMenu();
+  allData = JSON.parse(xhr.responseText);
+  allData = allData.data.XML_Head.Infos.Info;
+  updateZone();
+  menu.addEventListener('change', change_ZoneData);
 }
 
-menu.addEventListener('change',function(e){
-  h1.textContent = menu.value;
-  content_list.innerHTML='';
-  page.innerHTML='';
 
-  // 用for寫
-  for (let i=0; i<allData.length; i++){
-    if (allData[i].Zone == menu.value){ 
-      pageCount +=1; 
+let checkPage =1;
+let newAeraData = [];
+let presentNum = 6;
+let lastData =[];
+
+// 實施分頁按鈕的功能
+pagelist.addEventListener('click',function(e){
+  if (e.target.nodeName != 'INPUT') return;
+  content_list.innerHTML = '';
+
+  if (checkPage < Math.ceil(areaData.length / presentNum)){
+    console.log('1');
+    // if (e.target.value >=1){
+    checkPage = e.target.value;
+    let i = parseInt((checkPage - 1) * presentNum);
+    let iLen = i + presentNum;
+    for (i; i < iLen; i++) {
+      newAeraData.push(areaData[i])
+      listData(i);
     }
-  }
-
-  console.log(pageCount);
-
-  if (pageCount > 8){
-    for (let i=0; i<allData.length; i++){
-      if (allData[i].Zone == menu.value){ 
-        listData(allData[i].Picture1,allData[i].Name,allData[i].Zone,allData[i].Opentime,allData[i].Add,allData[i].Tel)
-      }
-    };
-
-    for( let j=1; j<=Math.ceil(pageCount/8) ;j++){
-      page.innerHTML+=`<li><input type="button" value="${j}""></li>`
-    };
-  }else{
-    for (let i=0; i<allData.length; i++){
-      if (allData[i].Zone == menu.value){ 
-        listData(allData[i].Picture1,allData[i].Name,allData[i].Zone,allData[i].Opentime,allData[i].Add,allData[i].Tel)
-      }
+  }else if (checkPage == Math.ceil(areaData.length / presentNum)){
+    console.log('3');
+    checkPage = e.target.value; 
+    lastData = Array.from(areaData);
+    lastData.splice(0, ((checkPage - 1) * presentNum));
+    lastData.forEach((item)=>{
+      content_list.innerHTML += `<div class="travelBox">
+        <img src="${item.Picture1}" alt="">
+        <p class="name">${item.Name}</p>
+        <p class="zone">${item.Zone}</p>
+        <ul>
+          <li><img src="image/icons_clock.png" alt="">${item.Opentime}</li>
+          <li><img src="image/icons_pin.png" alt="">${item.Add}</li>
+          <li><img src="image/icons_phone.png" alt="">${item.Tel}</li>
+        </ul>
+      </div>`;
     }
-  }
-  // pageCount=0;  
+  )}
 })
 
-function updateMenu() {
-  // 先抓出全部的 Zone
+//抓出每一個區的資料放入陣列中，若是大於6則新增分頁按鈕;
+function change_ZoneData(e){
+  h1.textContent = menu.value;
+  content_list.innerHTML = '';
+  pagelist.innerHTML = '';
+  areaData = [];
+
+  //與選定區域名稱相同的資料放入陣列areaData中;
+  allData.forEach(function (i, index, arr) {
+    if (i.Zone == menu.value) {
+      areaData.push(i);
+    }
+  })
+
+  //若是資料長度大於6，則會新增分頁(分頁數量取除以呈現數量後無條件進位)
+  if (areaData.length > presentNum) {
+    for (let i = 0; i < presentNum; i++) {
+      listData(i)
+    }
+    for (let j = 1; j <= Math.ceil(areaData.length / presentNum); j++) {
+      pagelist.innerHTML += `<input type="button" value="${j}">`
+    };
+      // pagelist.innerHTML += `<input type="button" value="Next">`
+  } else {
+    for (let i = 0; i < areaData.length; i++) {
+      listData(i);
+    }
+  }
+}
+
+function updateZone() {
+  // 先抓出全部資料各自的行政區
   for (var i = 0; i < allData.length; i++) {
     allData[i].Zone = allData[i].Add.substr(6, 3);
-    allDataDis.push(allData[i].Zone);
   }
   console.log('讀取完畢');
 }
 
-function listData(Picture1,Name,Zone,Opentime,Add,Tel){
+function listData(str){
   content_list.innerHTML += `<div class="travelBox">
-          <img src="${Picture1}" alt="">
-          <p class="name">${Name}</p>
-          <p class="zone">${Zone}</p>
+          <img src="${areaData[str].Picture1}" alt="">
+          <p class="name">${areaData[str].Name}</p>
+          <p class="zone">${areaData[str].Zone}</p>
           <ul>
-            <li><img src="image/icons_clock.png" alt="">${Opentime}</li>
-            <li><img src="image/icons_pin.png" alt="">${Add}</li>
-            <li><img src="image/icons_phone.png" alt="">${Tel}</li>
+            <li><img src="image/icons_clock.png" alt="">${areaData[str].Opentime}</li>
+            <li><img src="image/icons_pin.png" alt="">${areaData[str].Add}</li>
+            <li><img src="image/icons_phone.png" alt="">${areaData[str].Tel}</li>
           </ul>
         </div>`;
 }
 
-
-
-// // console.log(str);
-// var result = new Set();
-// var repeat = new Set();
-// origin.forEach(item => {
-//   result.has(item) ? repeat.add(item) : result.add(item);
-// })  
-// //new Set是一個物件，放進去就會幫我們決定會不會重複。
-// console.log(result); // {1, 2, "a", 3, "b"}
-// console.log(repeat); // {1, "a"}
-// menu.addEventListener('change',function(e){
-// })
-
-// allData.forEach(function(i,index,arr){
-//   if (i.Zone == menu.value){
-//     pageCount +=1;
-//     listData(i.Picture1,i.Name,i.Zone,i.Opentime,i.Add,i.Tel)    
-//   }
-// })
