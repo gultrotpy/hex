@@ -1,0 +1,247 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* 由此開始 */
+
+body .wrap{
+  margin: 0 auto;
+  width: 1024px;
+}
+
+/* header部分 */
+.header{
+  background-image:url('image/Hero.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 380px;  
+  background-size:auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  position: relative;
+}
+
+.title{
+  color: #fff;
+  font-size: 40px;
+  top: 100px;
+}
+
+#list{
+  background: rgba(255,255,255,0.7);
+  font-size: 18px;
+}
+
+.hotArea{
+  width: 800px;
+  height: 100px;
+  padding: 10px 16px;
+  position: absolute;
+  bottom: -100px;
+  background: #FFF;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,20);
+  font-size: 18px;
+}
+
+.hotBtn{
+  display: flex;
+  align-items: center;
+}
+
+.hotArea input{
+  width: 130px;
+  height: 42px;
+  margin: 10px;
+  margin-left: 20px;
+  margin-top: 20px;
+  font-size: 20px;
+  color: #fff;
+  border: 1px outset #fff;
+  border-radius: 5px;
+}
+
+.hotArea input:nth-child(1){background: #8A82CC;}
+/* .hotArea input:nth-child(1):hover{width: 150px;height: 60px;position:absolute;} */
+
+.hotArea input:nth-child(2){background: #FFA782;}
+/* .hotArea input:nth-child(2):hover{width: 150px;height: 60px;position:absolute;} */
+
+.hotArea input:nth-child(3){background: #F5D005;}
+/* .hotArea input:nth-child(3):hover{width: 150px;height: 60px;position:absolute;} */
+
+.hotArea input:nth-child(4){background: #559AC8;}
+/* .hotArea input:nth-child(4):hover{width: 150px;height: 60px;position:absolute;} */
+
+.header select{
+  width: 452px;
+  height: 48px;
+  border-radius: 3px;
+}
+
+
+/* content從此開始 */
+
+.content{
+  margin: 150px 0px;
+}
+
+.divi {
+  width: 900px;
+  height: 1px;
+  border-bottom: 6px dotted #559AC8;
+  margin: 0 auto;
+  position: relative;
+}
+
+.divi img{
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: -10px;
+  left: 48%;
+  border: 3px solid #559Ac8;
+  border-radius: 50%;
+}
+
+.content h1{
+  padding-top: 60px;
+  font-family: Brush Script MT, Brush Script Std, cursive;
+  font-size: 36px;
+  color: #8A82CC;
+  text-align: center;
+}
+
+/* 結果的地方 */
+.content_box{
+  width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.travelBox{
+  width: 464px;
+  height: 300px;
+  margin: 10px;
+  box-shadow: 0 1px 3px 0 
+}
+
+.travelBox img{
+  width: 464px;
+  height: 155px;
+}
+
+.name{
+  height: 0;
+  position: relative;
+  bottom: 40px;
+  left: 20px;
+  font-size: 24px;
+  color: #FFFFFF;
+  font-weight: bold;
+  text-shadow: 0.1em 0.1em 0.05em #333;
+}
+
+.zone{
+  height: 0;
+  position: relative;
+  left: 400px;
+  bottom: 30px;
+  font-size: 16px;
+  color:#fff;
+  font-weight: bold;
+  text-shadow: 0.1em 0.1em 0.05em #333;
+}
+
+.travelBox ul li{
+  line-height: 18px;
+  font-family: AppleSystemUIFont;
+  font-size: 16px;
+  color: #000000;
+}
+
+.travelBox ul li img{
+  width: 16px;
+  height: 20px;
+  padding: 10px 6px 0px 25px;
+}
+
+.pageNum{
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.pageNum input{
+  border: 1px solid skyblue;
+  background-color: #fff;
+}
+
+
+/* footer部分 */
+.footer{
+  background: #559AC8;
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  line-height: 17px;
+  padding: 10px;
+}
+
+.footer p{
+  color: #ffd366;
+}
+
+.btn_goTop{
+  /* position: relative; */
+  position: fixed;
+  right: 400px;
+  bottom: 40px;
+}
