@@ -40,12 +40,16 @@ list.addEventListener('change',function(e){
   totalPage = Math.ceil(areaLen / prepage);   //無條件進位取整數
 
   
-  if (areaLen <= prepage){
-    displayData(areaData);    
+  //要是抓出來的資料長度小於等於呈現資料數 (即該地區的觀光景點小於6個)，直接將陣列帶入並展示資料
+  if (areaLen <= prepage){  
+    displayData(areaData);
+    //反之則先抓出前六筆資料印出去    
   }else{
-    let pickData=Array.from(areaData);
-    pickData.copyWithin(0, (nowPage * prepage) - 6, (nowPage * prepage));
-    pickData.splice(6, areaLen);
+    // let pickData=Array.from(areaData); //複製同一個陣列並
+    // pickData.copyWithin(0, (nowPage * prepage) - 6, (nowPage * prepage));  //將選擇的範圍放到前位置0~5
+    // pickData.splice(6, areaLen); //將包括位置6之後的資料都刪除
+    let pickData =[];
+    pickData = areaData.slice(0,6)
     displayData(pickData);
     initPageNum()
   }
@@ -141,15 +145,20 @@ function initPageNum(){
   pageNum.innerHTML += `<input type="button" value="Next">`
 }
 
+//製作分業、上一頁跟下一頁的功能
 function pre_nxt(nowPage){
   if (nowPage == totalPage) {
-    let lastData = Array.from(areaData);
-    lastData.splice(0, (nowPage - 1) * prepage);
-    displayData(lastData);
+    // let lastpage = Array.from(areaData);
+    // lastpage.splice(0, (nowPage - 1) * prepage);
+    let lastpage =[];
+    lastpage = areaData.slice(((nowPage-1) * prepage))     //1(0,6)、2(6，12)、3(12,18)
+    displayData(lastpage);
   } else if (nowPage < totalPage && nowPage >0) {
-    let pickData = Array.from(areaData);
-    pickData.copyWithin(0, (nowPage * prepage) - 6, (nowPage * prepage));
-    pickData.splice(6, areaLen);
+    // let pickData = Array.from(areaData);
+    // pickData.copyWithin(0, (nowPage * prepage) - 6, (nowPage * prepage));  //複製同一個陣列的某個值，並可以選定範圍
+    // pickData.splice(6, areaLen);
+    let pickData =[];
+    pickData = areaData.slice(((nowPage - 1) * prepage), ((nowPage) * prepage))
     displayData(pickData);
   }
 }
