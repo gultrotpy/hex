@@ -21,6 +21,22 @@ xhr.onload = function () {
   allData = JSON.parse(xhr.responseText);
   allData = allData.data.XML_Head.Infos.Info;//此時物件中每筆資料的zone是空值，不利我們做選單進行分類
   updateZone(); //對Add字串進行處理抓出行政區然後放回去。
+
+  areaList();
+  areaData = allData;
+  areaLen = areaData.length;
+  totalPage = Math.ceil(areaLen / prepage);
+
+  if (areaLen <= prepage) {
+    displayData(areaData);
+  } else {
+    let pickData = Array.from(areaData); //複製一個跟areaData不同址的陣列，取名為pickData
+    // pickData.copyWithin(0, (nowPage * prepage) - 6, (nowPage * prepage));  //
+    pickData.splice(6, areaLen);
+    displayData(pickData);
+    initPageNum()
+  }
+  nowPage = 1;
 }
 
 //製作景點內容，利用監聽的方式，但要先抓出同一個地區的資料
@@ -83,6 +99,8 @@ hotBtn.addEventListener('click',function(e){
   if (e.target.nodeName != 'INPUT') return;
   h1.textContent = e.target.value;
   pageNum.innerHTML = ``;
+
+  list.value = e.target.value; //點了之後動態更改選單的區域
 
   //抓出選擇的區域資料
   areaData = [];
@@ -161,4 +179,24 @@ function pre_nxt(nowPage){
     pickData = areaData.slice(((nowPage - 1) * prepage), ((nowPage) * prepage))
     displayData(pickData);
   }
+}
+
+//動態新增選單中的區域，利用indexOf去比對區域，將包含的區放入陣列area中，在用innerHTML去動態新增
+function areaList() {
+  let areaList = [];
+  for (let i = 0; i < allData.length; i++) {
+    areaList.push(allData[i].Zone);
+  }
+
+  let area = [];
+  areaList.forEach(function (value) {
+    if (area.indexOf(value) == -1) {
+      area.push(value);
+    }
+  })
+
+  area.forEach(function (value) {
+    list.innerHTML += `<option value="${value}">${value}</option>`;
+  })
+
 }
