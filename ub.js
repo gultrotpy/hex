@@ -3,43 +3,29 @@ const xhr = new XMLHttpRequest();  //呼叫ajax
 xhr.open('get', 'https://api.kcg.gov.tw/api/service/get/9c8e1450-e833-499c-8320-29b36b7ace5c', true);  //抓取資料並選擇非同步模式
 xhr.send(null);  //回傳訊息為null
 
-const list= document.getElementById('list'); //選單的區域
+const list = document.getElementById('list'); //選單的區域
 const h1 = document.querySelector('.content h1'); //選擇的行政區名稱
 const content_box = document.querySelector('.content_box'); //放選擇出來得資料
 const pageNum = document.querySelector('.pageNum'); //放置分頁的div
 const hotBtn = document.querySelector('.hotBtn'); //熱門區域
 
-let allData={}; //放進抓取出來得資料並物件化;
-let areaData=[]; //指定區域後的資料會放進此陣列
+let allData = {}; //放進抓取出來得資料並物件化;
+let areaData = []; //指定區域後的資料會放進此陣列
 let nowPage = 1; //預設當前分頁是1
-let totalPage; 
-let areaLen; 
+let totalPage;
+let areaLen;
 const prepage = 6;   //每一頁呈現六筆資料
 
-//讀取完成後，放進抓取出來的資料並物件化;
+//讀取完成後，放進抓取出來得資料並物件化;
 xhr.onload = function () {
   allData = JSON.parse(xhr.responseText);
   allData = allData.data.XML_Head.Infos.Info;//此時物件中每筆資料的zone是空值，不利我們做選單進行分類
   updateZone(); //對Add字串進行處理抓出行政區然後放回去。
-  areaList();
-  areaData = allData;
-  areaLen = areaData.length;    
-  totalPage = Math.ceil(areaLen / prepage);
 
-  if (areaLen <= prepage) {
-    displayData(areaData);
-  } else {
-    let pickData = Array.from(areaData); //複製一個跟areaData不同址的陣列，取名為pickData
-    // pickData.copyWithin(0, (nowPage * prepage) - 6, (nowPage * prepage));  //
-    pickData.splice(6, areaLen);
-    displayData(pickData);
-    initPageNum()
-  }
-  nowPage = 1;
 }
 
 //製作景點內容，利用監聽的方式，但要先抓出同一個地區的資料
-list.addEventListener('change',function(e){
+list.addEventListener('change', function (e) {
   pageNum.innerHTML = ``;
   h1.textContent = list.value;
 
@@ -54,49 +40,47 @@ list.addEventListener('change',function(e){
   areaLen = areaData.length;    //抓出來後的資料長度
   totalPage = Math.ceil(areaLen / prepage);   //如果大於6個觀光景點，則除以每頁該顯示的頁數，無條件進位取整數
 
-  
-  if (areaLen <= prepage){
-    displayData(areaData);    
-  }else{
-    let pickData=Array.from(areaData); //複製一個跟areaData不同址的陣列，取名為pickData
-    pickData.copyWithin(0, (nowPage * prepage) - 6, (nowPage * prepage));  //
+
+  if (areaLen <= prepage) {
+    displayData(areaData);
+  } else {
+    let pickData = Array.from(areaData); //複製一個跟areaData不同址的陣列，取名為pickData
+    // pickData.copyWithin(0, (nowPage * prepage) - 6, (nowPage * prepage));  //
     pickData.splice(6, areaLen);
     displayData(pickData);
     initPageNum()
   }
   nowPage = 1;
-})    
+})
 
 // 監聽分頁按鈕，把範圍內資料print出來
-pageNum.addEventListener('click',function(e){
+pageNum.addEventListener('click', function (e) {
   if (e.target.nodeName != 'INPUT') return;
 
-  if (e.target.value == 'Next'){
+  if (e.target.value == 'Next') {
     nowPage += 1;
     pre_nxt(nowPage);
-  } else if (e.target.value == 'Previous'){
+  } else if (e.target.value == 'Previous') {
     nowPage -= 1;
     pre_nxt(nowPage);
-  }else{
-    
+  } else {
+
     nowPage = e.target.value
     pre_nxt(nowPage);
   }
 
   if (nowPage < 1) {
     nowPage = 1;
-  }else if(nowPage >totalPage){
+  } else if (nowPage > totalPage) {
     nowPage = totalPage;
   }
 })
 
 //設定熱門景點的按鈕
-hotBtn.addEventListener('click',function(e){
+hotBtn.addEventListener('click', function (e) {
   if (e.target.nodeName != 'INPUT') return;
   h1.textContent = e.target.value;
   pageNum.innerHTML = ``;
-
-  list.value = e.target.value; //點了之後動態更改選單的區域
 
   //抓出選擇的區域資料
   areaData = [];
@@ -120,12 +104,13 @@ hotBtn.addEventListener('click',function(e){
     initPageNum()
   }
   nowPage = 1;
+
 })
 
 //更新抓下來的資料區域，利用了substr抓取字串中固定的範圍的內容
 function updateZone() {
   //原為for寫法，新版更改為foreach寫法並使用箭頭函式
-  allData.forEach((i)=>{
+  allData.forEach((i) => {
     i.Zone = i.Add.substr(6, 3);
   })
   console.log('讀取完畢');
@@ -133,7 +118,7 @@ function updateZone() {
 
 //將陣列傳進去並使用forEach把每一筆陣列都innerHTML到顯示的畫面上
 function displayData(arr) {
-  content_box.innerHTML =``;
+  content_box.innerHTML = ``;
   arr.forEach((i) => {
     content_box.innerHTML += `<div class="travelBox">
         <img src="${i.Picture1}" alt="">
@@ -149,7 +134,7 @@ function displayData(arr) {
 }
 
 //如果資料筆數大於6,則會依製作出分頁數量
-function initPageNum(){
+function initPageNum() {
   pageNum.innerHTML = ``;
   pageNum.innerHTML += `<input type="button" value="Previous">`
   for (let j = 1; j <= totalPage; j++) {
@@ -158,35 +143,15 @@ function initPageNum(){
   pageNum.innerHTML += `<input type="button" value="Next">`
 }
 
-function pre_nxt(nowPage){
+function pre_nxt(nowPage) {
   if (nowPage == totalPage) {
     let lastData = Array.from(areaData);
     lastData.splice(0, (nowPage - 1) * prepage);
     displayData(lastData);
-  } else if (nowPage < totalPage && nowPage >0) {
+  } else if (nowPage < totalPage && nowPage > 0) {
     let pickData = Array.from(areaData);
     pickData.copyWithin(0, (nowPage * prepage) - 6, (nowPage * prepage));
     pickData.splice(6, areaLen);
     displayData(pickData);
   }
-}
-
-//動態新增選單中的區域，利用indexOf去比對區域，將包含的區放入陣列area中，在用innerHTML去動態新增
-function areaList(){
-  let areaList=[];
-  for(let i=0;i<allData.length;i++){
-    areaList.push(allData[i].Zone);
-  }
-
-  let area=[];
-  areaList.forEach(function(value){
-    if(area.indexOf(value)==-1){
-      area.push(value);
-    }
-  })
-
-  area.forEach(function(value){
-    list.innerHTML += `<option value="${value}">${value}</option>`;
-  })
-
 }
